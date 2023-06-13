@@ -8,6 +8,8 @@ import (
 	"bytes"
 	"fmt"
 	"time"
+
+	log_2 "unknwon.dev/clog/v2"
 )
 
 // UnescapeChars reverses escaped characters.
@@ -100,6 +102,7 @@ func (r *Repository) LsTree(rev string, opts ...LsTreeOptions) (*Tree, error) {
 	}
 
 	var err error
+	log_2.Trace("[DEBUG LOG BY RCOS] rev in r.RevParse() : %s", rev)
 	rev, err = r.RevParse(rev, RevParseOptions{Timeout: opt.Timeout}) //nolint
 	if err != nil {
 		return nil, err
@@ -108,7 +111,7 @@ func (r *Repository) LsTree(rev string, opts ...LsTreeOptions) (*Tree, error) {
 		id:   MustIDFromString(rev),
 		repo: r,
 	}
-
+	log_2.Trace("[DEBUG LOG BY RCOS] rev in NewCommand(\"ls-tree\", rev) : %s", rev)
 	stdout, err := NewCommand("ls-tree", rev).RunInDirWithTimeout(opt.Timeout, r.path)
 	if err != nil {
 		return nil, err
