@@ -7,6 +7,8 @@ package git
 import (
 	"path"
 	"strings"
+
+	log_2 "unknwon.dev/clog/v2"
 )
 
 // TreeEntry returns the TreeEntry by given subpath of the tree.
@@ -23,6 +25,7 @@ func (t *Tree) TreeEntry(subpath string, opts ...LsTreeOptions) (*TreeEntry, err
 	paths := strings.Split(subpath, "/")
 	var err error
 	tree := t
+	log_2.Trace("[DEBUG LOG BY RCOS] Tree ID : %s", tree.id)
 	for i, name := range paths {
 		// Reached end of the loop
 		if i == len(paths)-1 {
